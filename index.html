@@ -1,1 +1,767 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сергей Прядкин — дипломированный психолог-консультант, НЛП-тренер | Королёв и онлайн</title>
+  <meta name="description" content="Индивидуальные психологические консультации и краткосрочная терапия. Диплом ФИС ФРДО, более 13 лет подтвержденной практики (с 2013 года). Очно в Королёве и онлайн.">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-alt: #f1f5f9;
+      --primary: #1e3a5f;
+      --primary-hover: #152a45;
+      --accent: #0284c7;
+      --accent-hover: #0369a1;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --radius: 14px;
+      --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-sm {
+      padding: 9px 16px;
+      font-size: 14px;
+    }
+
+    .hero {
+      padding: 56px 0 64px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 40px;
+      line-height: 1.18;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      max-width: 560px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .hero-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 14px;
+      color: var(--text-muted);
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-facts span strong {
+      color: var(--text);
+    }
+
+    .photo-card {
+      background: var(--surface);
+      padding: 12px;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 14px;
+      object-fit: cover;
+      aspect-ratio: 4 / 5;
+      background: #e2e8f0;
+    }
+
+    section {
+      padding: 64px 0;
+    }
+
+    section.alt {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-title {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 17px;
+      margin-bottom: 36px;
+      max-width: 680px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+    }
+
+    section.alt .card {
+      background: var(--bg);
+    }
+
+    .card h3 {
+      font-size: 18px;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 44px;
+      align-items: start;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      border-radius: 12px;
+    }
+
+    .year-badge {
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+
+    .timeline-item h4 {
+      font-size: 16px;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .timeline-item p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .doc-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .doc-preview {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: zoom-in;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .doc-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .doc-card h3 {
+      font-size: 17px;
+      color: var(--primary);
+    }
+
+    .doc-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .price-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+    }
+
+    .price-card.featured {
+      border: 2px solid var(--accent);
+      position: relative;
+    }
+
+    .popular-tag {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .price-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .price-duration {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .price-amount {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .price-list {
+      list-style: none;
+      margin-bottom: 24px;
+      font-size: 14px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .price-list li::before {
+      content: "✓ ";
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .cta-box {
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 20px;
+      padding: 44px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .cta-box h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .cta-box p {
+      color: #cbd5e1;
+      max-width: 580px;
+      font-size: 16px;
+    }
+
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 40px 0;
+      font-size: 13px;
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .footer-disclaimer {
+      max-width: 680px;
+      line-height: 1.5;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.85);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal img {
+      max-width: 95%;
+      max-height: 90vh;
+      border-radius: 10px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 28px;
+      color: #ffffff;
+      font-size: 36px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid,
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .grid-3,
+      .pricing-grid,
+      .docs-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <a href="#" class="brand">Сергей Прядкин</a>
+      <nav class="nav-links">
+        <a href="#requests">Запросы</a>
+        <a href="#about">Опыт и метод</a>
+        <a href="#documents">Дипломы</a>
+        <a href="#pricing">Стоимость</a>
+      </nav>
+      <a href="https://t.me/SergeyPryadkin" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+        Написать в Telegram
+      </a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge">Диплом ФИС ФРДО • Практика с 2013 года</span>
+        <h1>Сергей Прядкин — психолог-консультант и НЛП-тренер</h1>
+        <p class="hero-sub">
+          Помогаю справляться с тревогой, внутренними кризисами, эмоциональным выгоранием и ограничивающими убеждениями. Работаю в краткосрочном подходе с опорой на практический результат.
+        </p>
+        <div class="hero-actions">
+          <a href="https://t.me/SergeyPryadkin?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8E." target="_blank" rel="noopener" class="btn btn-primary">
+            Записаться в Telegram
+          </a>
+          <a href="#pricing" class="btn btn-outline">Форматы и стоимость</a>
+        </div>
+        <div class="hero-facts">
+          <span><strong>13+ лет</strong> подтвержденной практики</span>
+          <span><strong>Онлайн</strong> по всему миру</span>
+          <span><strong>Очно</strong> в г. Королёв (МО)</span>
+        </div>
+      </div>
+      <div class="photo-card">
+        <img src="photo-main.jpg" alt="Сергей Прядкин — психолог-консультант">
+      </div>
+    </div>
+  </section>
+
+  <section id="requests" class="alt">
+    <div class="container">
+      <h2 class="section-title">С какими запросами я работаю</h2>
+      <p class="section-desc">
+        Вместо многолетних разговоров по кругу мы находим корневую причину состояния и перестраиваем автоматические реакции, которые мешают двигаться вперед.
+      </p>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Тревога, страхи и напряжение</h3>
+          <p>Постоянное внутреннее беспокойство, страх оценки или публичных выступлений, последствия стрессовых ситуаций и эмоциональных потрясений.</p>
+        </div>
+        <div class="card">
+          <h3>Выгорание и потеря энергии</h3>
+          <p>Состояние хронической усталости, потеря интереса к работе и привычным делам, ощущение тупика и нехватки внутренних опор.</p>
+        </div>
+        <div class="card">
+          <h3>Ограничивающие убеждения</h3>
+          <p>Синдром самозванца, жесткая самокритика, повторяющиеся жизненные сценарии и негативный прошлый опыт (техника реимпринтинга).</p>
+        </div>
+        <div class="card">
+          <h3>Сложные решения и кризисы</h3>
+          <p>Смена профессии или этапа жизни, страх сделать выбор, внутренние конфликты между «надо» и «хочу».</p>
+        </div>
+        <div class="card">
+          <h3>Границы и коммуникация</h3>
+          <p>Трудности в отстаивании личных границ, напряжение в отношениях с близкими, коллегами или партнерами по бизнесу.</p>
+        </div>
+        <div class="card">
+          <h3>Личные и карьерные цели</h3>
+          <p>Постановка ясных целей без самосаботажа, преодоление прокрастинации и формирование устойчивого ресурсного состояния.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container about-grid">
+      <div class="photo-card">
+        <img src="photo-work.jpg" alt="Сергей Прядкин в рабочем процессе">
+      </div>
+      <div>
+        <h2 class="section-title">Опыт и профессиональный путь</h2>
+        <p class="section-desc" style="margin-bottom: 16px;">
+          Я совмещаю классическую базу психологического консультирования с инструментами нейролингвистического программирования и эриксоновского подхода. Работа строится бережно, конфиденциально и без навязывания лишних сессий.
+        </p>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="year-badge">2006 г.</span>
+            <div>
+              <h4>Старт в методе НЛП</h4>
+              <p>Прохождение базовой сертификационной программы «НЛП-Практик» и начало изучения техник работы с мышлением и состояниями.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="year-badge">2013 г.</span>
+            <div>
+              <h4>Подтвержденная практика и авторский блог</h4>
+              <p>Ведение частной практики и публикация цикла методологических материалов по метамодели и реимпринтингу на личном сайте sergey-pryadkin.ru (зафиксировано в государственном веб-архиве с февраля 2013 г.).</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="year-badge">2017 г.</span>
+            <div>
+              <h4>Экспертные видеоразборы</h4>
+              <p>Запись серии профильных интервью и разборов методик краткосрочной работы с психотравмами на причинном уровне.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="year-badge">2022 г.</span>
+            <div>
+              <h4>Диплом установленного образца (ФИС ФРДО)</h4>
+              <p>Окончание очной программы профессиональной переподготовки в ЧОУ ДПО «Институт Милтона Эриксона» (550 часов, ступени Практик, Мастер, Тренер) с правом ведения психологического консультирования.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="documents" class="alt">
+    <div class="container">
+      <h2 class="section-title">Образование и квалификация</h2>
+      <p class="section-desc">
+        Диплом о профессиональной переподготовке внесен в Федеральный реестр сведений о документах об образовании (ФИС ФРДО) и подтверждается через портал Госуслуг. Нажмите на документ, чтобы увеличить.
+      </p>
+      <div class="docs-grid">
+        <div class="doc-card">
+          <div class="doc-preview" onclick="openModal('diploma-2022.jpg')">
+            <img src="diploma-2022.jpg" alt="Диплом Института Милтона Эриксона 2022">
+          </div>
+          <h3>Диплом о профессиональной переподготовке (2022 г.)</h3>
+          <p>ЧОУ ДПО «Институт Милтона Эриксона», 550 часов. Право на ведение профессиональной деятельности в сфере психологического консультирования.</p>
+        </div>
+        <div class="doc-card">
+          <div class="doc-preview" onclick="openModal('cert-2006.jpg')">
+            <img src="cert-2006.jpg" alt="Сертификат НЛП-Практик 2006">
+          </div>
+          <h3>Сертификат «НЛП-Практик» (2006 г.)</h3>
+          <p>Базовая сертификация в методе нейролингвистического программирования, положившая начало 20-летнему пути в профессии.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="container">
+      <h2 class="section-title">Форматы и стоимость консультаций</h2>
+      <p class="section-desc">
+        Работаю официально (плательщик НПД / самозанятый, после оплаты выдаю официальный чек). Встречи проходят онлайн (Telegram, Яндекс Телемост) или очно в г. Королёв.
+      </p>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div>
+            <div class="price-title">Установочная встреча</div>
+            <div class="price-duration">20–30 минут • Онлайн</div>
+            <div class="price-amount">1 500 ₽</div>
+            <ul class="price-list">
+              <li>Знакомство и прояснение вашего запроса</li>
+              <li>Оценка перспектив и плана работы</li>
+              <li>Ответы на вопросы по методу</li>
+            </ul>
+          </div>
+          <a href="https://t.me/SergeyPryadkin?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BE%D1%87%D0%BD%D1%83%D1%8E%20%D0%B2%D1%81%D1%82%D1%80%D0%B5%D1%87%D1%83%20(1%20500%20%E2%82%BD)." target="_blank" rel="noopener" class="btn btn-outline">
+            Записаться в Telegram
+          </a>
+        </div>
+
+        <div class="price-card featured">
+          <span class="popular-tag">Основной формат</span>
+          <div>
+            <div class="price-title">Индивидуальная сессия</div>
+            <div class="price-duration">60 минут • Онлайн / Королёв</div>
+            <div class="price-amount">4 500 ₽</div>
+            <ul class="price-list">
+              <li>Полноценный астрономический час (60 мин)</li>
+              <li>Глубокая проработка точечного запроса</li>
+              <li>Очно в Королёве — 5 000 ₽ (с учетом кабинета)</li>
+            </ul>
+          </div>
+          <a href="https://t.me/SergeyPryadkin?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B8%D0%BD%D0%B4%D0%B8%D0%B2%D0%B8%D0%B4%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%83%D1%8E%20%D1%81%D0%B5%D1%81%D1%81%D0%B8%D1%8E%20(60%20%D0%BC%D0%B8%D0%BD)." target="_blank" rel="noopener" class="btn btn-primary">
+            Выбрать в Telegram
+          </a>
+        </div>
+
+        <div class="price-card">
+          <div>
+            <div class="price-title">Глубинная проработка</div>
+            <div class="price-duration">90–120 минут • Онлайн / Королёв</div>
+            <div class="price-amount">8 500 ₽</div>
+            <ul class="price-list">
+              <li>Расширенный формат для сложных техник НЛП</li>
+              <li>Реимпринтинг и работа с глубинными сценариями</li>
+              <li>Пакет из 4 часовых сессий — 16 000 ₽</li>
+            </ul>
+          </div>
+          <a href="https://t.me/SergeyPryadkin?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9!%20%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F%20%D1%81%D0%B5%D1%81%D1%81%D0%B8%D1%8F%20%D0%B8%D0%BB%D0%B8%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82." target="_blank" rel="noopener" class="btn btn-outline">
+            Обсудить в Telegram
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top: 0;">
+    <div class="container">
+      <div class="cta-box">
+        <div>
+          <h2>Готовы обсудить ваш запрос?</h2>
+          <p>Напишите мне в Telegram в свободной форме — кратко опишите ситуацию, и мы подберем удобное время для встречи.</p>
+        </div>
+        <a href="https://t.me/SergeyPryadkin" target="_blank" rel="noopener" class="btn btn-primary" style="background: #ffffff; color: #1e3a5f;">
+          Перейти в @SergeyPryadkin
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-disclaimer">
+        <p style="color: #e2e8f0; font-weight: 600; margin-bottom: 6px;">Прядкин Сергей • Психолог-консультант (НПД)</p>
+        <p>Услуги психологического консультирования носят консультационный и просветительский характер, не являются медицинской помощью, диагностикой или лечением. Для взрослых клиентов (18+).</p>
+      </div>
+      <div>
+        <p>Telegram: <a href="https://t.me/SergeyPryadkin" target="_blank" rel="noopener" style="color: #38bdf8;">@SergeyPryadkin</a></p>
+        <p style="margin-top: 6px;">© 2013–2026 sergey-pryadkin.ru</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="docModal" class="modal" onclick="closeModal()">
+    <span class="modal-close">&times;</span>
+    <img id="modalImg" src="" alt="Просмотр документа">
+  </div>
+
+  <script>
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('docModal').classList.add('open');
+    }
+    function closeModal() {
+      document.getElementById('docModal').classList.remove('open');
+    }
+  </script>
+</body>
+</html>
