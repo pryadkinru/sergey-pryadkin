@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тренажер «Алфавит» ∞ — Нейрогимнастика | Сергей Прядкин</title>
+  <meta name="description" content="Интерактивный нейропсихологический тренажер «Алфавит» (игра на внимание, межполушарное взаимодействие и выход из стресса).">
+  <link rel="canonical" href="https://sergey-pryadkin.ru/alphabet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-alt: #f1f5f9;
+      --primary: #1e3a5f;
+      --primary-hover: #152a45;
+      --accent: #0284c7;
+      --accent-hover: #0369a1;
+      --accent-soft: #e0f2fe;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --radius: 14px;
+      --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+      --success: #059669;
+      --warning: #d97706;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    /* Header */
+    header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      gap: 16px;
+    }
+
+    .brand {
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+      user-select: none;
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-navy {
+      background-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-navy:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background-color: var(--surface);
+      color: var(--primary);
+      border-color: var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      background-color: var(--surface-alt);
+    }
+
+    .btn-outline.active {
+      background-color: var(--accent-soft);
+      border-color: var(--accent);
+      color: #0369a1;
+    }
+
+    /* Main Content */
+    main {
+      flex: 1;
+      padding: 36px 0 60px;
+    }
+
+    .page-header {
+      margin-bottom: 28px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: #0369a1;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 720px;
+    }
+
+    /* Game Layout */
+    .game-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    /* Toolbar */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Alphabet Grid */
+    .grid-board {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .cell {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .cell-letter {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.1;
+    }
+
+    .cell-cue {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: 4px;
+      padding: 1px 7px;
+      border-radius: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+
+    .cell.active {
+      background: var(--accent);
+      border-color: var(--accent-hover);
+      transform: scale(1.06);
+      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.32);
+      z-index: 2;
+    }
+
+    .cell.active .cell-letter {
+      color: #ffffff;
+    }
+
+    .cell.active .cell-cue {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .cell.visited {
+      background: #f1f5f9;
+      opacity: 0.65;
+    }
+
+    /* Status & Current Letter Card */
+    .current-display {
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .current-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+
+    .current-value {
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.1;
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .current-cue-badge {
+      font-size: 22px;
+      background: rgba(255, 255, 255, 0.16);
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #cbd5e1;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* Controls Sidebar */
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    .control-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .control-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .speed-val {
+      background: var(--accent-soft);
+      color: #0369a1;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .modes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .mode-btn {
+      padding: 9px 10px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+    }
+
+    .mode-btn:hover {
+      border-color: var(--accent);
+      color: var(--primary);
+    }
+
+    .mode-btn.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: #0369a1;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      padding: 10px 12px;
+      background: var(--bg);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .checkbox-row input {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    /* Info section */
+    .guide-box {
+      margin-top: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .guide-box h2 {
+      font-size: 20px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .guide-item {
+      background: var(--bg);
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .guide-item strong {
+      display: block;
+      color: var(--primary);
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 32px 0;
+      font-size: 13px;
+      margin-top: auto;
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 880px) {
+      .game-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .guide-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-board {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+      }
+
+      .cell-letter {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="brand">Сергей Прядкин</a>
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-outline">← На главную</a>
+        <a href="https://t.me/SergeyPryadkin" target="_blank" rel="noopener" class="btn btn-primary">
+          Telegram
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="page-header">
+        <span class="badge">Нейрогимнастика • Концентрация и выход из стресса</span>
+        <h1>Игра «Алфавит» ∞</h1>
+        <p class="subtitle">
+          Классический тренажер из НЛП и нейропсихологии (техника «Алфавит» Джона Гриндера) для синхронизации полушарий, остановки внутреннего диалога и быстрого входа в ресурсное состояние.
+        </p>
+      </div>
+
+      <div class="game-layout">
+        <!-- Left: Board & Controls -->
+        <div class="panel">
+          <div class="toolbar">
+            <button id="btnStart" class="btn btn-primary" onclick="startGame()">▶ Старт</button>
+            <button id="btnPause" class="btn btn-outline" onclick="pauseGame()">⏸ Пауза</button>
+            <button id="btnReset" class="btn btn-outline" onclick="resetGame()">↺ Сброс</button>
+            <button id="btnShuffle" class="btn btn-outline" onclick="shuffleBoard()">🔄 Новая раскладка</button>
+            <button id="btnSound" class="btn btn-outline active" onclick="toggleSound()">🔊 Звук: Вкл</button>
+          </div>
+
+          <div id="gridBoard" class="grid-board"></div>
+
+          <div style="font-size: 13px; color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <span>Подсказки под буквой: <strong>Л</strong> — левая рука, <strong>П</strong> — правая рука, <strong>О</strong> — обе руки</span>
+            <span>Клавиша <strong>Пробел</strong> — Старт / Пауза</span>
+          </div>
+        </div>
+
+        <!-- Right: Current Letter & Settings -->
+        <div class="panel">
+          <div class="current-display">
+            <div class="current-label">Текущая буква</div>
+            <div id="currentDisplay" class="current-value">—</div>
+            <div class="stats-row">
+              <span>Круг: <strong id="roundCount">1</strong></span>
+              <span>Шаг: <strong id="stepCount">0 / 30</strong></span>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="checkbox-row">
+              <input type="checkbox" id="autoShuffle" checked>
+              <span>🔄 Новая раскладка каждый круг</span>
+            </label>
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Скорость смены</span>
+              <span id="speedLabel" class="speed-val">2.0 с</span>
+            </div>
+            <input type="range" id="speedRange" min="0.5" max="5" step="0.5" value="2" oninput="updateSpeed(this.value)">
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Режим прохождения</span>
+            </div>
+            <div class="modes-grid" id="modesGrid">
+              <button class="mode-btn active" data-mode="forward" onclick="setMode('forward', this)">Прямой</button>
+              <button class="mode-btn" data-mode="reverse" onclick="setMode('reverse', this)">Обратный</button>
+              <button class="mode-btn" data-mode="vertical" onclick="setMode('vertical', this)">По вертикали</button>
+              <button class="mode-btn" data-mode="snake" onclick="setMode('snake', this)">Змейка</button>
+              <button class="mode-btn" data-mode="skip" onclick="setMode('skip', this)">Через одну</button>
+              <button class="mode-btn" data-mode="random" onclick="setMode('random', this)">Случайный</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-box">
+        <h2>Как выполнять упражнение для максимального эффекта</h2>
+        <div class="guide-grid">
+          <div class="guide-item">
+            <strong>1. Называйте букву вслух</strong>
+            Громко и четко произносите подсвеченную букву в ритме метронома, удерживая взгляд в центре экрана (периферическим зрением).
+          </div>
+          <div class="guide-item">
+            <strong>2. Поднимайте нужную руку</strong>
+            Одновременно с произнесением буквы поднимайте руку по нижней подсказке: <strong>Л</strong> (левая), <strong>П</strong> (правая) или <strong>О</strong> (обе вверх).
+          </div>
+          <div class="guide-item">
+            <strong>3. Перезагрузка внимания</strong>
+            Через 3–5 минут регулярной практики останавливается поток тревожных мыслей и повышается ясность концентрации.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <p style="color: #e2e8f0; font-weight: 600; margin-bottom: 4px;">Прядкин Сергей • Психолог-консультант и НЛП-тренер</p>
+        <p>Инструмент для самостоятельной тренировки внимания. Не является медицинской услугой.</p>
+      </div>
+      <div>
+        <p><a href="index.html" style="color: #38bdf8;">← Вернуться на главную страницу</a></p>
+        <p style="margin-top: 4px;">Telegram: <a href="https://t.me/SergeyPryadkin" target="_blank" rel="noopener" style="color: #38bdf8;">@SergeyPryadkin</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const LETTERS = [
+      'А','Б','В','Г','Д','Е',
+      'Ж','З','И','К','Л','М',
+      'Н','О','П','Р','С','Т',
+      'У','Ф','Х','Ц','Ч','Ш',
+      'Щ','Ы','Э','Ю','Я','Ё'
+    ];
+    const CUES = ['Л', 'П', 'О'];
+
+    let boardData = [];
+    let sequence = [];
+    let currentStep = -1;
+    let round = 1;
+    let mode = 'forward';
+    let speedSec = 2.0;
+    let timer = null;
+    let isRunning = false;
+    let soundEnabled = true;
+    let audioCtx = null;
+
+    function playBeep() {
+      if (!soundEnabled) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(520, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.12);
+      } catch (e) {}
+    }
+
+    function generateBoardData() {
+      const shuffledLetters = [...LETTERS].sort(() => Math.random() - 0.5);
+      boardData = shuffledLetters.map((letter, idx) => ({
+        index: idx,
+        letter: letter,
+        cue: CUES[Math.floor(Math.random() * CUES.length)]
+      }));
+    }
+
+    function renderBoard() {
+      const grid = document.getElementById('gridBoard');
+      grid.innerHTML = '';
+      boardData.forEach((item, idx) => {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.id = 'cell-' + idx;
+        cell.innerHTML = `
+          <div class="cell-letter">${item.letter}</div>
+          <div class="cell-cue">${item.cue}</div>
+        `;
+        grid.appendChild(cell);
+      });
+    }
+
+    function buildSequence() {
+      const total = 30;
+      const cols = 6;
+      const rows = 5;
+      let seq = [];
+
+      if (mode === 'forward') {
+        for (let i = 0; i < total; i++) seq.push(i);
+      } else if (mode === 'reverse') {
+        for (let i = total - 1; i >= 0; i--) seq.push(i);
+      } else if (mode === 'vertical') {
+        for (let c = 0; c < cols; c++) {
+          for (let r = 0; r < rows; r++) {
+            seq.push(r * cols + c);
+          }
+        }
+      } else if (mode === 'snake') {
+        for (let r = 0; r < rows; r++) {
+          if (r % 2 === 0) {
+            for (let c = 0; c < cols; c++) seq.push(r * cols + c);
+          } else {
+            for (let c = cols - 1; c >= 0; c--) seq.push(r * cols + c);
+          }
+        }
+      } else if (mode === 'skip') {
+        for (let i = 0; i < total; i += 2) seq.push(i);
+        for (let i = 1; i < total; i += 2) seq.push(i);
+      } else if (mode === 'random') {
+        for (let i = 0; i < total; i++) seq.push(i);
+        seq.sort(() => Math.random() - 0.5);
+      }
+      sequence = seq;
+    }
+
+    function updateHighlight() {
+      document.querySelectorAll('.cell').forEach(el => {
+        el.classList.remove('active');
+      });
+
+      if (currentStep >= 0 && currentStep < sequence.length) {
+        const cellIdx = sequence[currentStep];
+        const cellEl = document.getElementById('cell-' + cellIdx);
+        if (cellEl) {
+          cellEl.classList.add('active');
+          cellEl.classList.add('visited');
+        }
+        const item = boardData[cellIdx];
+        document.getElementById('currentDisplay').innerHTML = `
+          <span>${item.letter}</span>
+          <span class="current-cue-badge">${item.cue}</span>
+        `;
+        document.getElementById('stepCount').textContent = `${currentStep + 1} / 30`;
+        document.getElementById('roundCount').textContent = round;
+        playBeep();
+      } else {
+        document.getElementById('currentDisplay').textContent = '—';
+        document.getElementById('stepCount').textContent = '0 / 30';
+      }
+    }
+
+    function nextTick() {
+      currentStep++;
+      if (currentStep >= sequence.length) {
+        round++;
+        currentStep = 0;
+        document.querySelectorAll('.cell').forEach(el => el.classList.remove('visited'));
+        if (document.getElementById('autoShuffle').checked) {
+          generateBoardData();
+          renderBoard();
+        }
+        buildSequence();
+      }
+      updateHighlight();
+    }
+
+    function startGame() {
+      if (isRunning) return;
+      isRunning = true;
+      document.getElementById('btnStart').textContent = '▶ Идет игра...';
+      if (currentStep === -1) {
+        nextTick();
+      }
+      timer = setInterval(nextTick, speedSec * 1000);
+    }
+
+    function pauseGame() {
+      isRunning = false;
+      clearInterval(timer);
+      document.getElementById('btnStart').textContent = '▶ Старт';
+    }
+
+    function resetGame() {
+      pauseGame();
+      currentStep = -1;
+      round = 1;
+      document.querySelectorAll('.cell').forEach(el => {
+        el.classList.remove('active', 'visited');
+      });
+      document.getElementById('roundCount').textContent = '1';
+      updateHighlight();
+    }
+
+    function shuffleBoard() {
+      const wasRunning = isRunning;
+      pauseGame();
+      generateBoardData();
+      renderBoard();
+      buildSequence();
+      currentStep = -1;
+      updateHighlight();
+      if (wasRunning) startGame();
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById('btnSound');
+      if (soundEnabled) {
+        btn.textContent = '🔊 Звук: Вкл';
+        btn.classList.add('active');
+      } else {
+        btn.textContent = '🔇 Звук: Выкл';
+        btn.classList.remove('active');
+      }
+    }
+
+    function updateSpeed(val) {
+      speedSec = parseFloat(val);
+      document.getElementById('speedLabel').textContent = speedSec.toFixed(1) + ' с';
+      if (isRunning) {
+        clearInterval(timer);
+        timer = setInterval(nextTick, speedSec * 1000);
+      }
+    }
+
+    function setMode(newMode, btnEl) {
+      mode = newMode;
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
+      const wasRunning = isRunning;
+      pauseGame();
+      currentStep = -1;
+      document.querySelectorAll('.cell').forEach(el => el.classList.remove('active', 'visited'));
+      buildSequence();
+      updateHighlight();
+      if (wasRunning) startGame();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (isRunning) pauseGame();
+        else startGame();
+      }
+    });
+
+    // Init
+    generateBoardData();
+    renderBoard();
+    buildSequence();
+  </script>
+</body>
+</html>
