@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Тренажер «Алфавит» ∞ — Нейрогимнастика | Сергей Прядкин</title>
-  <meta name="description" content="Интерактивный нейропсихологический тренажер «Алфавит» (игра на внимание, межполушарное взаимодействие и выход из стресса).">
+  <title>Игра «Алфавит» — Тренажер внимания и синхронизации | Сергей Прядкин</title>
+  <meta name="description" content="Онлайн-тренажер «Алфавит» для развития концентрации внимания, межполушарного взаимодействия и выхода из ментального напряжения. Психолог Сергей Прядкин.">
   <link rel="canonical" href="https://sergey-pryadkin.ru/alphabet">
   <style>
     :root {
@@ -15,14 +15,11 @@
       --primary-hover: #152a45;
       --accent: #0284c7;
       --accent-hover: #0369a1;
-      --accent-soft: #e0f2fe;
       --text: #0f172a;
       --text-muted: #475569;
       --border: #e2e8f0;
       --radius: 14px;
       --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
-      --success: #059669;
-      --warning: #d97706;
     }
 
     * {
@@ -37,9 +34,9 @@
       color: var(--text);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
     }
 
     a {
@@ -47,7 +44,7 @@
       text-decoration: none;
     }
 
-    .container {
+    .site-container {
       max-width: 1080px;
       margin: 0 auto;
       padding: 0 20px;
@@ -69,7 +66,6 @@
       align-items: center;
       justify-content: space-between;
       height: 68px;
-      gap: 16px;
     }
 
     .brand {
@@ -96,14 +92,13 @@
       font-size: 14px;
       transition: all 0.2s ease;
       cursor: pointer;
-      border: 1px solid transparent;
-      user-select: none;
+      border: none;
     }
 
     .btn-primary {
       background-color: var(--accent);
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.2);
     }
 
     .btn-primary:hover {
@@ -111,19 +106,10 @@
       transform: translateY(-1px);
     }
 
-    .btn-navy {
-      background-color: var(--primary);
-      color: #ffffff;
-    }
-
-    .btn-navy:hover {
-      background-color: var(--primary-hover);
-    }
-
     .btn-outline {
-      background-color: var(--surface);
+      background-color: transparent;
       color: var(--primary);
-      border-color: var(--border);
+      border: 1.5px solid var(--border);
     }
 
     .btn-outline:hover {
@@ -131,25 +117,19 @@
       background-color: var(--surface-alt);
     }
 
-    .btn-outline.active {
-      background-color: var(--accent-soft);
-      border-color: var(--accent);
-      color: #0369a1;
-    }
-
     /* Main Content */
     main {
       flex: 1;
-      padding: 36px 0 60px;
+      padding: 36px 0 56px;
     }
 
     .page-header {
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .badge {
       display: inline-block;
-      background: var(--accent-soft);
+      background: #e0f2fe;
       color: #0369a1;
       font-size: 13px;
       font-weight: 600;
@@ -160,273 +140,303 @@
 
     h1 {
       font-size: 32px;
+      line-height: 1.2;
       font-weight: 800;
       color: var(--primary);
+      margin-bottom: 10px;
       letter-spacing: -0.02em;
-      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .subtitle {
-      color: var(--text-muted);
       font-size: 16px;
-      max-width: 720px;
+      color: var(--text-muted);
+      max-width: 760px;
     }
 
-    /* Game Layout */
-    .game-layout {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 24px;
-      align-items: start;
+    .loop-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 12px;
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 700;
     }
 
-    .panel {
+    /* Game Card */
+    .game-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
+      border-radius: 20px;
+      padding: 28px;
       box-shadow: var(--shadow);
     }
 
-    /* Toolbar */
-    .toolbar {
+    .controls {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* Alphabet Grid */
-    .grid-board {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .cell {
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 16px;
       background: var(--bg);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      aspect-ratio: 1 / 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s ease;
-      position: relative;
-    }
-
-    .cell-letter {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--primary);
-      line-height: 1.1;
-    }
-
-    .cell-cue {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-muted);
-      margin-top: 4px;
-      padding: 1px 7px;
-      border-radius: 6px;
-      background: var(--surface);
       border: 1px solid var(--border);
+      border-radius: var(--radius);
     }
 
-    .cell.active {
-      background: var(--accent);
-      border-color: var(--accent-hover);
-      transform: scale(1.06);
-      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.32);
-      z-index: 2;
-    }
-
-    .cell.active .cell-letter {
-      color: #ffffff;
-    }
-
-    .cell.active .cell-cue {
-      background: rgba(255, 255, 255, 0.2);
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.35);
-    }
-
-    .cell.visited {
-      background: #f1f5f9;
-      opacity: 0.65;
-    }
-
-    /* Status & Current Letter Card */
-    .current-display {
-      background: var(--primary);
-      color: #ffffff;
-      border-radius: 14px;
-      padding: 20px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .current-label {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #cbd5e1;
-      margin-bottom: 6px;
-    }
-
-    .current-value {
-      font-size: 56px;
-      font-weight: 800;
-      line-height: 1.1;
-      min-height: 62px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-    }
-
-    .current-cue-badge {
-      font-size: 22px;
-      background: rgba(255, 255, 255, 0.16);
-      padding: 6px 14px;
-      border-radius: 10px;
-      font-weight: 700;
-    }
-
-    .stats-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      color: #cbd5e1;
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    /* Controls Sidebar */
-    .control-group {
-      margin-bottom: 20px;
-    }
-
-    .control-group:last-child {
-      margin-bottom: 0;
-    }
-
-    .control-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .controls button {
+      padding: 9px 15px;
       font-size: 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: var(--accent);
+      color: #ffffff;
+      border: none;
+      font-weight: 600;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .controls button:hover:not(:disabled) {
+      background-color: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .controls button:disabled {
+      background-color: #cbd5e1;
+      color: #64748b;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .controls button#resetBtn,
+    .controls button#newLayoutBtn {
+      background-color: var(--surface);
+      color: var(--primary);
+      border: 1.5px solid var(--border);
+    }
+
+    .controls button#resetBtn:hover,
+    .controls button#newLayoutBtn:hover {
+      border-color: var(--primary);
+      background-color: var(--surface-alt);
+    }
+
+    .controls button#soundBtn {
+      background-color: var(--primary);
+    }
+
+    .controls button#soundBtn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .controls button.muted {
+      background-color: #94a3b8 !important;
+      color: #ffffff !important;
+    }
+
+    .controls select {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .controls select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .controls label {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--primary);
+    }
+
+    .checkbox-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .checkbox-label:hover {
+      border-color: var(--accent);
+      background: #f0f9ff;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      cursor: pointer;
+      accent-color: var(--accent);
+      margin: 0;
+    }
+
+    .checkbox-label.active {
+      background: #ecfdf5;
+      border-color: #10b981;
+      color: #065f46;
+    }
+
+    .speed-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      padding: 7px 12px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+    }
+
+    .speed-control input[type="range"] {
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+
+    #speedValue {
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 10px;
+      min-width: 30px;
+      font-size: 14px;
     }
 
-    .speed-val {
-      background: var(--accent-soft);
-      color: #0369a1;
-      padding: 2px 10px;
-      border-radius: 999px;
-      font-size: 13px;
-    }
-
-    input[type="range"] {
-      width: 100%;
-      accent-color: var(--accent);
-      cursor: pointer;
-    }
-
-    .modes-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .mode-control {
+      display: inline-flex;
+      align-items: center;
       gap: 8px;
     }
 
-    .mode-btn {
-      padding: 9px 10px;
-      border-radius: 9px;
-      font-size: 13px;
-      font-weight: 600;
-      background: var(--bg);
-      border: 1.5px solid var(--border);
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.15s ease;
+    /* Current Letter Panel */
+    .current-letter-panel {
       text-align: center;
+      margin-bottom: 24px;
+      padding: 20px;
+      background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
+      border-radius: 16px;
+      border: 1.5px solid #bae6fd;
     }
 
-    .mode-btn:hover {
-      border-color: var(--accent);
-      color: var(--primary);
-    }
-
-    .mode-btn.active {
-      background: var(--accent-soft);
-      border-color: var(--accent);
+    .current-letter-panel .label {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
       color: #0369a1;
+      margin-bottom: 6px;
     }
 
-    .checkbox-row {
+    .current-letter-panel .letter {
+      font-size: 76px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.05;
+    }
+
+    .current-letter-panel .hint {
+      font-size: 22px;
+      font-weight: 700;
+      margin-top: 6px;
+      min-height: 30px;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .cell {
+      background-color: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 8px;
+      text-align: center;
+      transition: all 0.2s ease;
+      cursor: default;
+      user-select: none;
+    }
+
+    .cell.active {
+      background-color: #fef08a;
+      border-color: #eab308;
+      transform: scale(1.06);
+      box-shadow: 0 6px 18px rgba(234, 179, 8, 0.35);
+    }
+
+    .cell .letter {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .cell .hint {
+      font-size: 18px;
+      font-weight: 800;
+      margin-top: 3px;
+    }
+
+    .hint-Л { color: #dc2626; }
+    .hint-П { color: #0284c7; }
+    .hint-О { color: #16a34a; }
+
+    .status {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-muted);
+      min-height: 28px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text);
-      cursor: pointer;
-      padding: 10px 12px;
-      background: var(--bg);
-      border-radius: 10px;
-      border: 1px solid var(--border);
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .checkbox-row input {
-      width: 17px;
-      height: 17px;
-      accent-color: var(--accent);
-      cursor: pointer;
-    }
-
-    /* Info section */
-    .guide-box {
+    /* Info Box */
+    .info-box {
       margin-top: 28px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: 16px;
       padding: 24px;
-    }
-
-    .guide-box h2 {
-      font-size: 20px;
-      color: var(--primary);
-      margin-bottom: 12px;
-    }
-
-    .guide-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 14px;
+      gap: 20px;
     }
 
-    .guide-item {
-      background: var(--bg);
-      padding: 16px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
+    .info-item h3 {
+      font-size: 16px;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .info-item p {
       font-size: 14px;
       color: var(--text-muted);
-    }
-
-    .guide-item strong {
-      display: block;
-      color: var(--primary);
-      margin-bottom: 4px;
-      font-size: 15px;
     }
 
     /* Footer */
@@ -443,24 +453,36 @@
       justify-content: space-between;
       gap: 24px;
       flex-wrap: wrap;
+      align-items: center;
     }
 
-    @media (max-width: 880px) {
-      .game-layout {
+    @media (max-width: 720px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      .game-card {
+        padding: 16px;
+      }
+
+      .grid {
+        gap: 6px;
+      }
+
+      .cell {
+        padding: 8px 4px;
+      }
+
+      .cell .letter {
+        font-size: 20px;
+      }
+
+      .cell .hint {
+        font-size: 15px;
+      }
+
+      .info-box {
         grid-template-columns: 1fr;
-      }
-
-      .guide-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .grid-board {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 8px;
-      }
-
-      .cell-letter {
-        font-size: 22px;
       }
     }
   </style>
@@ -468,347 +490,436 @@
 <body>
 
   <header>
-    <div class="container nav">
-      <a href="index.html" class="brand">Сергей Прядкин</a>
+    <div class="site-container nav">
+      <a href="/" class="brand">Сергей Прядкин</a>
       <div class="nav-actions">
-        <a href="index.html" class="btn btn-outline">← На главную</a>
-        <a href="https://t.me/SergeyPryadkin" target="_blank" rel="noopener" class="btn btn-primary">
-          Telegram
-        </a>
+        <a href="/" class="btn btn-outline">← На главную</a>
+        <a href="https://t.me/SergeyPryadkin" target="_blank" rel="noopener" class="btn btn-primary">Написать в Telegram</a>
       </div>
     </div>
   </header>
 
   <main>
-    <div class="container">
+    <div class="site-container">
       <div class="page-header">
-        <span class="badge">Нейрогимнастика • Концентрация и выход из стресса</span>
-        <h1>Игра «Алфавит» ∞</h1>
+        <span class="badge">Нейропрактика и тренировка внимания</span>
+        <h1>Игра «Алфавит» <span class="loop-badge">∞ Бесконечный режим</span></h1>
         <p class="subtitle">
-          Классический тренажер из НЛП и нейропсихологии (техника «Алфавит» Джона Гриндера) для синхронизации полушарий, остановки внутреннего диалога и быстрого входа в ресурсное состояние.
+          Классическое упражнение для синхронизации полушарий, развития устойчивой концентрации и быстрого выхода из внутреннего напряжения и «мыслемешалки».
         </p>
       </div>
 
-      <div class="game-layout">
-        <!-- Left: Board & Controls -->
-        <div class="panel">
-          <div class="toolbar">
-            <button id="btnStart" class="btn btn-primary" onclick="startGame()">▶ Старт</button>
-            <button id="btnPause" class="btn btn-outline" onclick="pauseGame()">⏸ Пауза</button>
-            <button id="btnReset" class="btn btn-outline" onclick="resetGame()">↺ Сброс</button>
-            <button id="btnShuffle" class="btn btn-outline" onclick="shuffleBoard()">🔄 Новая раскладка</button>
-            <button id="btnSound" class="btn btn-outline active" onclick="toggleSound()">🔊 Звук: Вкл</button>
+      <div class="game-card">
+        <div class="controls">
+          <button id="startBtn">▶ Старт</button>
+          <button id="pauseBtn" disabled>⏸ Пауза</button>
+          <button id="resetBtn">↺ Сброс</button>
+          <button id="newLayoutBtn">🔄 Новая раскладка</button>
+          <button id="soundBtn" title="Включить/выключить звук">🔊 Звук</button>
+          <label class="checkbox-label" id="newLayoutLoopLabel" title="При замыкании круга подсказки полностью перемешиваются">
+            <input type="checkbox" id="newLayoutEachLoop">
+            🔄 Новая раскладка каждый круг
+          </label>
+          <div class="speed-control">
+            <label for="speed">Скорость:</label>
+            <input type="range" id="speed" min="1" max="10" value="2" step="1">
+            <span id="speedValue">2 с</span>
           </div>
-
-          <div id="gridBoard" class="grid-board"></div>
-
-          <div style="font-size: 13px; color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-            <span>Подсказки под буквой: <strong>Л</strong> — левая рука, <strong>П</strong> — правая рука, <strong>О</strong> — обе руки</span>
-            <span>Клавиша <strong>Пробел</strong> — Старт / Пауза</span>
-          </div>
-        </div>
-
-        <!-- Right: Current Letter & Settings -->
-        <div class="panel">
-          <div class="current-display">
-            <div class="current-label">Текущая буква</div>
-            <div id="currentDisplay" class="current-value">—</div>
-            <div class="stats-row">
-              <span>Круг: <strong id="roundCount">1</strong></span>
-              <span>Шаг: <strong id="stepCount">0 / 30</strong></span>
-            </div>
-          </div>
-
-          <div class="control-group">
-            <label class="checkbox-row">
-              <input type="checkbox" id="autoShuffle" checked>
-              <span>🔄 Новая раскладка каждый круг</span>
-            </label>
-          </div>
-
-          <div class="control-group">
-            <div class="control-label">
-              <span>Скорость смены</span>
-              <span id="speedLabel" class="speed-val">2.0 с</span>
-            </div>
-            <input type="range" id="speedRange" min="0.5" max="5" step="0.5" value="2" oninput="updateSpeed(this.value)">
-          </div>
-
-          <div class="control-group">
-            <div class="control-label">
-              <span>Режим прохождения</span>
-            </div>
-            <div class="modes-grid" id="modesGrid">
-              <button class="mode-btn active" data-mode="forward" onclick="setMode('forward', this)">Прямой</button>
-              <button class="mode-btn" data-mode="reverse" onclick="setMode('reverse', this)">Обратный</button>
-              <button class="mode-btn" data-mode="vertical" onclick="setMode('vertical', this)">По вертикали</button>
-              <button class="mode-btn" data-mode="snake" onclick="setMode('snake', this)">Змейка</button>
-              <button class="mode-btn" data-mode="skip" onclick="setMode('skip', this)">Через одну</button>
-              <button class="mode-btn" data-mode="random" onclick="setMode('random', this)">Случайный</button>
-            </div>
+          <div class="mode-control">
+            <label for="mode">Режим:</label>
+            <select id="mode">
+              <option value="forward">Прямой</option>
+              <option value="backward">Обратный</option>
+              <option value="vertical">По вертикали</option>
+              <option value="snake">Змейка</option>
+              <option value="everyOther">Через одну</option>
+              <option value="random">Случайный</option>
+            </select>
           </div>
         </div>
+
+        <div class="current-letter-panel">
+          <div class="label">Текущая буква</div>
+          <div class="letter" id="currentLetterDisplay">—</div>
+          <div class="hint" id="currentHintDisplay"></div>
+        </div>
+
+        <div id="grid" class="grid"></div>
+        <div class="status" id="status"></div>
       </div>
 
-      <div class="guide-box">
-        <h2>Как выполнять упражнение для максимального эффекта</h2>
-        <div class="guide-grid">
-          <div class="guide-item">
-            <strong>1. Называйте букву вслух</strong>
-            Громко и четко произносите подсвеченную букву в ритме метронома, удерживая взгляд в центре экрана (периферическим зрением).
-          </div>
-          <div class="guide-item">
-            <strong>2. Поднимайте нужную руку</strong>
-            Одновременно с произнесением буквы поднимайте руку по нижней подсказке: <strong>Л</strong> (левая), <strong>П</strong> (правая) или <strong>О</strong> (обе вверх).
-          </div>
-          <div class="guide-item">
-            <strong>3. Перезагрузка внимания</strong>
-            Через 3–5 минут регулярной практики останавливается поток тревожных мыслей и повышается ясность концентрации.
-          </div>
+      <div class="info-box">
+        <div class="info-item">
+          <h3>Как выполнять упражнение</h3>
+          <p>Называйте вслух подсвеченную букву и одновременно поднимайте руку по подсказке ниже: <strong class="hint-Л">Л</strong> — левая, <strong class="hint-П">П</strong> — правая, <strong class="hint-О">О</strong> — обе руки.</p>
+        </div>
+        <div class="info-item">
+          <h3>Зачем это нужно</h3>
+          <p>Одновременное удержание визуального, речевого и двигательного каналов переводит мозг в состояние сфокусированного присутствия («аптайм») и снимает тревожный фоновый диалог.</p>
+        </div>
+        <div class="info-item">
+          <h3>Рекомендация по практике</h3>
+          <p>Начните со скорости 2–3 секунды в прямом режиме. Когда почувствуете легкость, ускорьте темп или включите режим «Змейка» и обновление раскладки каждый круг.</p>
         </div>
       </div>
     </div>
   </main>
 
   <footer>
-    <div class="container footer-grid">
+    <div class="site-container footer-grid">
       <div>
-        <p style="color: #e2e8f0; font-weight: 600; margin-bottom: 4px;">Прядкин Сергей • Психолог-консультант и НЛП-тренер</p>
-        <p>Инструмент для самостоятельной тренировки внимания. Не является медицинской услугой.</p>
+        <p style="color: #e2e8f0; font-weight: 600;">Прядкин Сергей • Психолог-консультант (НПД)</p>
+        <p style="margin-top: 4px;">Индивидуальные консультации онлайн и очно в г. Королёв</p>
       </div>
       <div>
-        <p><a href="index.html" style="color: #38bdf8;">← Вернуться на главную страницу</a></p>
-        <p style="margin-top: 4px;">Telegram: <a href="https://t.me/SergeyPryadkin" target="_blank" rel="noopener" style="color: #38bdf8;">@SergeyPryadkin</a></p>
+        <p>Telegram: <a href="https://t.me/SergeyPryadkin" target="_blank" rel="noopener" style="color: #38bdf8;">@SergeyPryadkin</a> • <a href="/" style="color: #38bdf8;">sergey-pryadkin.ru</a></p>
       </div>
     </div>
   </footer>
 
   <script>
-    const LETTERS = [
-      'А','Б','В','Г','Д','Е',
-      'Ж','З','И','К','Л','М',
-      'Н','О','П','Р','С','Т',
-      'У','Ф','Х','Ц','Ч','Ш',
-      'Щ','Ы','Э','Ю','Я','Ё'
-    ];
-    const CUES = ['Л', 'П', 'О'];
+    (function() {
+      const alphabet = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'.split('');
+      const gridContainer = document.getElementById('grid');
+      const currentLetterDisplay = document.getElementById('currentLetterDisplay');
+      const currentHintDisplay = document.getElementById('currentHintDisplay');
+      const statusDiv = document.getElementById('status');
+      const startBtn = document.getElementById('startBtn');
+      const pauseBtn = document.getElementById('pauseBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const newLayoutBtn = document.getElementById('newLayoutBtn');
+      const soundBtn = document.getElementById('soundBtn');
+      const speedInput = document.getElementById('speed');
+      const speedValue = document.getElementById('speedValue');
+      const modeSelect = document.getElementById('mode');
+      const newLayoutEachLoopCheckbox = document.getElementById('newLayoutEachLoop');
+      const newLayoutLoopLabel = document.getElementById('newLayoutLoopLabel');
 
-    let boardData = [];
-    let sequence = [];
-    let currentStep = -1;
-    let round = 1;
-    let mode = 'forward';
-    let speedSec = 2.0;
-    let timer = null;
-    let isRunning = false;
-    let soundEnabled = true;
-    let audioCtx = null;
+      let layout = [];
+      let order = [];
+      let currentIndex = 0;
+      let timer = null;
+      let isRunning = false;
+      let isPaused = false;
+      let intervalMs = 2000;
+      let soundEnabled = true;
+      let loopCount = 0;
 
-    function playBeep() {
-      if (!soundEnabled) return;
-      try {
+      // ===== АУДИО =====
+      let audioCtx = null;
+
+      function initAudio() {
         if (!audioCtx) {
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (AC) audioCtx = new AC();
         }
-        if (audioCtx.state === 'suspended') {
+        if (audioCtx && audioCtx.state === 'suspended') {
           audioCtx.resume();
         }
+      }
+
+      function playBeep(freq, duration, volume, type, delay) {
+        if (!audioCtx || !soundEnabled) return;
+        delay = delay || 0;
+        const startTime = audioCtx.currentTime + delay;
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(520, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+        osc.type = type || 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.0001, startTime);
+        gain.gain.exponentialRampToValueAtTime(volume || 0.15, startTime + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.12);
-      } catch (e) {}
-    }
+        osc.start(startTime);
+        osc.stop(startTime + duration + 0.02);
+      }
 
-    function generateBoardData() {
-      const shuffledLetters = [...LETTERS].sort(() => Math.random() - 0.5);
-      boardData = shuffledLetters.map((letter, idx) => ({
-        index: idx,
-        letter: letter,
-        cue: CUES[Math.floor(Math.random() * CUES.length)]
-      }));
-    }
+      function playTransitionSound() {
+        playBeep(880, 0.08, 0.15, 'sine', 0);
+        playBeep(1320, 0.10, 0.12, 'sine', 0.06);
+      }
 
-    function renderBoard() {
-      const grid = document.getElementById('gridBoard');
-      grid.innerHTML = '';
-      boardData.forEach((item, idx) => {
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        cell.id = 'cell-' + idx;
-        cell.innerHTML = `
-          <div class="cell-letter">${item.letter}</div>
-          <div class="cell-cue">${item.cue}</div>
-        `;
-        grid.appendChild(cell);
-      });
-    }
+      function playStartSound() {
+        playBeep(660, 0.10, 0.15, 'triangle', 0);
+        playBeep(990, 0.12, 0.15, 'triangle', 0.08);
+      }
 
-    function buildSequence() {
-      const total = 30;
-      const cols = 6;
-      const rows = 5;
-      let seq = [];
+      function playLoopSound() {
+        playBeep(660, 0.12, 0.15, 'sine', 0);
+        playBeep(880, 0.12, 0.15, 'sine', 0.12);
+        playBeep(1320, 0.22, 0.15, 'sine', 0.24);
+      }
 
-      if (mode === 'forward') {
-        for (let i = 0; i < total; i++) seq.push(i);
-      } else if (mode === 'reverse') {
-        for (let i = total - 1; i >= 0; i--) seq.push(i);
-      } else if (mode === 'vertical') {
-        for (let c = 0; c < cols; c++) {
+      // ===== ГЕНЕРАЦИЯ РАСКЛАДКИ =====
+      function generateLayout() {
+        let hintPool = [];
+        for (let i = 0; i < 11; i++) hintPool.push('Л', 'П', 'О');
+        shuffleArray(hintPool);
+
+        let newLayout = [];
+        let poolIndex = 0;
+        for (let letter of alphabet) {
+          let hint = hintPool[poolIndex];
+          if ((letter === 'Л' && hint === 'Л') ||
+              (letter === 'П' && hint === 'П') ||
+              (letter === 'О' && hint === 'О')) {
+            let swapIndex = (poolIndex + 1) % hintPool.length;
+            [hintPool[poolIndex], hintPool[swapIndex]] = [hintPool[swapIndex], hintPool[poolIndex]];
+            hint = hintPool[poolIndex];
+          }
+          newLayout.push({ letter, hint });
+          poolIndex++;
+        }
+        return newLayout;
+      }
+
+      function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+      }
+
+      // ===== ПОРЯДОК ОБХОДА =====
+      function buildOrder(mode) {
+        const n = layout.length;
+        const cols = 6;
+        const rows = Math.ceil(n / cols);
+        let ord = [];
+
+        if (mode === 'forward') {
+          ord = Array.from({ length: n }, (_, i) => i);
+        } else if (mode === 'backward') {
+          ord = Array.from({ length: n }, (_, i) => n - 1 - i);
+        } else if (mode === 'vertical') {
+          for (let c = 0; c < cols; c++) {
+            for (let r = 0; r < rows; r++) {
+              const idx = r * cols + c;
+              if (idx < n) ord.push(idx);
+            }
+          }
+        } else if (mode === 'snake') {
           for (let r = 0; r < rows; r++) {
-            seq.push(r * cols + c);
+            let rowIndices = [];
+            for (let c = 0; c < cols; c++) {
+              const idx = r * cols + c;
+              if (idx < n) rowIndices.push(idx);
+            }
+            if (r % 2 === 1) rowIndices.reverse();
+            ord.push(...rowIndices);
           }
+        } else if (mode === 'everyOther') {
+          let odds = [];
+          let evens = [];
+          for (let i = 0; i < n; i++) {
+            if (i % 2 === 1) odds.push(i);
+            else evens.push(i);
+          }
+          ord = odds.concat(evens);
+        } else if (mode === 'random') {
+          ord = Array.from({ length: n }, (_, i) => i);
+          shuffleArray(ord);
         }
-      } else if (mode === 'snake') {
-        for (let r = 0; r < rows; r++) {
-          if (r % 2 === 0) {
-            for (let c = 0; c < cols; c++) seq.push(r * cols + c);
+        return ord;
+      }
+
+      // ===== ОТРИСОВКА =====
+      function renderGrid() {
+        gridContainer.innerHTML = '';
+        const cols = 6;
+        gridContainer.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+        layout.forEach((item, index) => {
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          cell.dataset.index = index;
+          cell.innerHTML = `
+            <div class="letter">${item.letter}</div>
+            <div class="hint hint-${item.hint}">${item.hint}</div>
+          `;
+          gridContainer.appendChild(cell);
+        });
+      }
+
+      function highlightCurrent() {
+        document.querySelectorAll('.cell').forEach(c => c.classList.remove('active'));
+        if (order.length === 0 || currentIndex >= order.length) return;
+        const idx = order[currentIndex];
+        const cell = gridContainer.querySelector(`.cell[data-index="${idx}"]`);
+        if (cell) {
+          cell.classList.add('active');
+          const item = layout[idx];
+          currentLetterDisplay.textContent = item.letter;
+          currentHintDisplay.textContent = `Подсказка: ${item.hint}`;
+          currentHintDisplay.className = `hint hint-${item.hint}`;
+        }
+      }
+
+      function updateStatus(text) {
+        const loopInfo = isRunning ? ` <span class="loop-badge">Круг ${loopCount + 1}</span>` : '';
+        statusDiv.innerHTML = text + loopInfo;
+      }
+
+      // ===== СБРОС =====
+      function resetGame() {
+        stopTimer();
+        isRunning = false;
+        isPaused = false;
+        currentIndex = 0;
+        loopCount = 0;
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        pauseBtn.textContent = '⏸ Пауза';
+        currentLetterDisplay.textContent = '—';
+        currentHintDisplay.textContent = '';
+        currentHintDisplay.className = 'hint';
+        statusDiv.textContent = 'Нажмите «Старт», чтобы начать.';
+        document.querySelectorAll('.cell').forEach(c => c.classList.remove('active'));
+      }
+
+      // ===== СТАРТ / ПАУЗА / ТИК =====
+      function startGame() {
+        initAudio();
+
+        if (isRunning && !isPaused) return;
+
+        if (isPaused) {
+          isPaused = false;
+          isRunning = true;
+          pauseBtn.textContent = '⏸ Пауза';
+          updateStatus('Игра продолжается...');
+          highlightCurrent();
+          timer = setInterval(tick, intervalMs);
+          return;
+        }
+
+        if (order.length === 0) {
+          order = buildOrder(modeSelect.value);
+        }
+        if (order.length === 0) {
+          statusDiv.textContent = 'Раскладка пуста. Создайте новую.';
+          return;
+        }
+        isRunning = true;
+        isPaused = false;
+        startBtn.disabled = true;
+        pauseBtn.disabled = false;
+        currentIndex = 0;
+        loopCount = 0;
+        updateStatus('Игра началась!');
+        highlightCurrent();
+        playStartSound();
+        timer = setInterval(tick, intervalMs);
+      }
+
+      function tick() {
+        if (!isRunning || isPaused) return;
+
+        if (currentIndex >= order.length - 1) {
+          loopCount++;
+          playLoopSound();
+
+          if (newLayoutEachLoopCheckbox.checked) {
+            layout = generateLayout();
+            renderGrid();
+            order = buildOrder(modeSelect.value);
+            currentIndex = 0;
+            highlightCurrent();
+            updateStatus('Новый круг с новой раскладкой!');
           } else {
-            for (let c = cols - 1; c >= 0; c--) seq.push(r * cols + c);
+            currentIndex = 0;
+            highlightCurrent();
+            updateStatus('Новый круг!');
           }
+          return;
         }
-      } else if (mode === 'skip') {
-        for (let i = 0; i < total; i += 2) seq.push(i);
-        for (let i = 1; i < total; i += 2) seq.push(i);
-      } else if (mode === 'random') {
-        for (let i = 0; i < total; i++) seq.push(i);
-        seq.sort(() => Math.random() - 0.5);
+
+        currentIndex++;
+        highlightCurrent();
+        playTransitionSound();
       }
-      sequence = seq;
-    }
 
-    function updateHighlight() {
-      document.querySelectorAll('.cell').forEach(el => {
-        el.classList.remove('active');
-      });
+      function pauseGame() {
+        if (!isRunning || isPaused) return;
+        isPaused = true;
+        stopTimer();
+        pauseBtn.textContent = '▶ Продолжить';
+        updateStatus('Пауза');
+      }
 
-      if (currentStep >= 0 && currentStep < sequence.length) {
-        const cellIdx = sequence[currentStep];
-        const cellEl = document.getElementById('cell-' + cellIdx);
-        if (cellEl) {
-          cellEl.classList.add('active');
-          cellEl.classList.add('visited');
+      function stopTimer() {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
         }
-        const item = boardData[cellIdx];
-        document.getElementById('currentDisplay').innerHTML = `
-          <span>${item.letter}</span>
-          <span class="current-cue-badge">${item.cue}</span>
-        `;
-        document.getElementById('stepCount').textContent = `${currentStep + 1} / 30`;
-        document.getElementById('roundCount').textContent = round;
-        playBeep();
-      } else {
-        document.getElementById('currentDisplay').textContent = '—';
-        document.getElementById('stepCount').textContent = '0 / 30';
       }
-    }
 
-    function nextTick() {
-      currentStep++;
-      if (currentStep >= sequence.length) {
-        round++;
-        currentStep = 0;
-        document.querySelectorAll('.cell').forEach(el => el.classList.remove('visited'));
-        if (document.getElementById('autoShuffle').checked) {
-          generateBoardData();
-          renderBoard();
-        }
-        buildSequence();
+      // ===== НОВАЯ РАСКЛАДКА (вручную) =====
+      function newLayout() {
+        stopTimer();
+        isRunning = false;
+        isPaused = false;
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        pauseBtn.textContent = '⏸ Пауза';
+        currentIndex = 0;
+        loopCount = 0;
+        layout = generateLayout();
+        order = [];
+        renderGrid();
+        resetGame();
+        statusDiv.textContent = 'Новая раскладка готова. Нажмите «Старт».';
       }
-      updateHighlight();
-    }
 
-    function startGame() {
-      if (isRunning) return;
-      isRunning = true;
-      document.getElementById('btnStart').textContent = '▶ Идет игра...';
-      if (currentStep === -1) {
-        nextTick();
+      // ===== ИНИЦИАЛИЗАЦИЯ =====
+      function init() {
+        layout = generateLayout();
+        renderGrid();
+        resetGame();
+
+        speedInput.addEventListener('input', function() {
+          const val = parseInt(this.value);
+          speedValue.textContent = val + ' с';
+          intervalMs = val * 1000;
+          if (isRunning && !isPaused) {
+            stopTimer();
+            timer = setInterval(tick, intervalMs);
+          }
+        });
+
+        startBtn.addEventListener('click', startGame);
+        pauseBtn.addEventListener('click', function() {
+          if (isPaused) startGame();
+          else pauseGame();
+        });
+        resetBtn.addEventListener('click', function() {
+          resetGame();
+          order = [];
+        });
+        newLayoutBtn.addEventListener('click', newLayout);
+        modeSelect.addEventListener('change', function() {
+          resetGame();
+          order = [];
+          statusDiv.textContent = 'Режим изменён. Нажмите «Старт».';
+        });
+
+        soundBtn.addEventListener('click', function() {
+          soundEnabled = !soundEnabled;
+          soundBtn.textContent = soundEnabled ? '🔊 Звук' : '🔇 Без звука';
+          soundBtn.classList.toggle('muted', !soundEnabled);
+          if (soundEnabled) {
+            initAudio();
+            playBeep(880, 0.08, 0.15, 'sine', 0);
+          }
+        });
+
+        newLayoutEachLoopCheckbox.addEventListener('change', function() {
+          newLayoutLoopLabel.classList.toggle('active', this.checked);
+        });
       }
-      timer = setInterval(nextTick, speedSec * 1000);
-    }
 
-    function pauseGame() {
-      isRunning = false;
-      clearInterval(timer);
-      document.getElementById('btnStart').textContent = '▶ Старт';
-    }
-
-    function resetGame() {
-      pauseGame();
-      currentStep = -1;
-      round = 1;
-      document.querySelectorAll('.cell').forEach(el => {
-        el.classList.remove('active', 'visited');
-      });
-      document.getElementById('roundCount').textContent = '1';
-      updateHighlight();
-    }
-
-    function shuffleBoard() {
-      const wasRunning = isRunning;
-      pauseGame();
-      generateBoardData();
-      renderBoard();
-      buildSequence();
-      currentStep = -1;
-      updateHighlight();
-      if (wasRunning) startGame();
-    }
-
-    function toggleSound() {
-      soundEnabled = !soundEnabled;
-      const btn = document.getElementById('btnSound');
-      if (soundEnabled) {
-        btn.textContent = '🔊 Звук: Вкл';
-        btn.classList.add('active');
-      } else {
-        btn.textContent = '🔇 Звук: Выкл';
-        btn.classList.remove('active');
-      }
-    }
-
-    function updateSpeed(val) {
-      speedSec = parseFloat(val);
-      document.getElementById('speedLabel').textContent = speedSec.toFixed(1) + ' с';
-      if (isRunning) {
-        clearInterval(timer);
-        timer = setInterval(nextTick, speedSec * 1000);
-      }
-    }
-
-    function setMode(newMode, btnEl) {
-      mode = newMode;
-      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-      btnEl.classList.add('active');
-      const wasRunning = isRunning;
-      pauseGame();
-      currentStep = -1;
-      document.querySelectorAll('.cell').forEach(el => el.classList.remove('active', 'visited'));
-      buildSequence();
-      updateHighlight();
-      if (wasRunning) startGame();
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.code === 'Space') {
-        e.preventDefault();
-        if (isRunning) pauseGame();
-        else startGame();
-      }
-    });
-
-    // Init
-    generateBoardData();
-    renderBoard();
-    buildSequence();
+      init();
+    })();
   </script>
 </body>
 </html>
